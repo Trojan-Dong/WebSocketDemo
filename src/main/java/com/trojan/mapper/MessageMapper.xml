@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trojan.mapper.MessageMapper">
+    <resultMap id="BaseResultMap" type="com.trojan.entity.Message">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="text" jdbcType="VARCHAR" property="text"/>
+        <result column="sender_id" jdbcType="INTEGER" property="senderId"/>
+        <result column="receiver_id" jdbcType="INTEGER" property="receiverId"/>
+        <result column="sendTime" jdbcType="TIMESTAMP" property="sendtime"/>
+        <result column="isRead" jdbcType="INTEGER" property="isread"/>
+        <result column="isDelete" jdbcType="INTEGER" property="isdelete"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.trojan.entity.Message">
+    insert into tbl_message (id, text, sender_id,
+      receiver_id, sendTime, isRead,
+      isDelete)
+    values (#{id,jdbcType=INTEGER}, #{text,jdbcType=VARCHAR}, #{senderId,jdbcType=INTEGER},
+      #{receiverId,jdbcType=INTEGER}, #{sendtime,jdbcType=TIMESTAMP}, #{isread,jdbcType=INTEGER},
+      #{isdelete,jdbcType=INTEGER})
+  </insert>
+    <insert id="addMessage" parameterType="com.trojan.entity.Message">
+        insert into tbl_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="text != null">
+                text,
+            </if>
+            <if test="senderId != null">
+                sender_id,
+            </if>
+            <if test="receiverId != null">
+                receiver_id,
+            </if>
+            <if test="sendtime != null">
+                sendTime,
+            </if>
+            <if test="isread != null">
+                isRead,
+            </if>
+            <if test="isdelete != null">
+                isDelete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="text != null">
+                #{text,jdbcType=VARCHAR},
+            </if>
+            <if test="senderId != null">
+                #{senderId,jdbcType=INTEGER},
+            </if>
+            <if test="receiverId != null">
+                #{receiverId,jdbcType=INTEGER},
+            </if>
+            <if test="sendtime != null">
+                #{sendtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isread != null">
+                #{isread,jdbcType=INTEGER},
+            </if>
+            <if test="isdelete != null">
+                #{isdelete,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateMessageStatus" parameterType="java.lang.Integer">
+        update
+        tbl_message
+        set
+        isread=1
+        <where>
+            <if test="senderId != null">
+                sender_id=#{senderId}
+            </if>
+            <if test="receiverId != null">
+                and receiver_id=#{receiverId}
+            </if>
+        </where>
+    </update>
+
+    <select id="getHistoryMessage" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <include refid="querySql"></include>
+        <where>
+            <if test="senderId != null and receiverId != null">
+                sender_id=#{senderId} and receiver_id=#{receiverId}
+            </if>
+            <if test="senderId != null and receiverId != null">
+                or sender_id=#{receiverId} and receiver_id=#{senderId}
+            </if>
+            and isdelete=0
+        </where>
+        order by t.sendTime
+    </select>
+
+    <sql id="querySql">
+        select
+            t.id,
+            t.text,
+            t.sender_id,
+            t.receiver_id,
+            t.sendTime,
+            t.isRead,
+            t.isDelete
+        from
+            tbl_message t
+  </sql>
+</mapper>
