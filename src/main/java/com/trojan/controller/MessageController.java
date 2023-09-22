@@ -1,22 +1,21 @@
-package com.trojan.controller;/**
- * @Description
- * @Author dgj
- * @Date 2020/8/4
- * @Version 1.0
- */
+package com.trojan.controller;
 
-import com.trojan.entity.Message;
+import com.trojan.repository.entity.Message;
+import com.trojan.repository.entity.User;
+import com.trojan.repository.service.MessageMapperService;
+import com.trojan.repository.service.UserMapperService;
 import com.trojan.socket.WebSocket;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
+import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @ClassName UserController
@@ -25,11 +24,19 @@ import java.util.Map;
  * @Date 2020/8/4
  * @Version 1.0
  */
-@Controller
-public class MessageController extends MainService {
-
+@Slf4j
+@RestController
+@RequestMapping("/message")
+public class MessageController {
+    
+    @Resource
+    private MessageMapperService messageMapperService;
+    
+    @Resource
+    private UserMapperService userMapperService;
+    
     public static WebSocket webSocket = new WebSocket();
-
+    
     @GetMapping("/sendAllWebSocket")
     @ResponseBody
     public String test() {
@@ -38,7 +45,7 @@ public class MessageController extends MainService {
         webSocket.sendAllMessage(text);
         return text;
     }
-
+    
     @GetMapping("/sendOneWebSocket/{userName}")
     @ResponseBody
     public String sendOneWebSocket(@PathVariable("userName") String userName) {
@@ -46,42 +53,43 @@ public class MessageController extends MainService {
         webSocket.sendOneMessage(userName, text);
         return text;
     }
-
+    
+    /**
+     * 发送消息
+     * @param message
+     */
     @RequestMapping("/sendMessage")
     @ResponseBody
-    public void sendMessage(@RequestBody Map<String, Object> requsest) {
-        System.out.println("request" + requsest);
-        Message msg = new Message();
-        Map reciver = (Map) requsest.get("reciver");
-        Map sender = (Map) requsest.get("sender");
-        msg.setSenderId((Integer) sender.get("id"));
-        msg.setReceiverId((Integer) reciver.get("id"));
-        msg.setSendtime(new Date());
-        msg.setIsread(0);
-        msg.setIsdelete(0);
-        msg.setText((String) requsest.get("message"));
-        String text = requsest.get("reciver") + ":" + requsest.get("message");
-        webSocket.sendOneMessage(reciver.get("loginName").toString(), msg);
-        messageService.addMessage(msg);
+    public void sendMessage(@RequestBody Message message) {
+        User receiver = userMapperService.findById(message.getReceiverId());
+        User sender = userMapperService.findById(message.getSenderId());
+        String text = receiver.getLoginName() + ":" + message.getText();
+        webSocket.sendOneMessage(receiver.getLoginName(), text);
+        messageMapperService.addMessage(message);
     }
-
+    
+    /**
+     * 更新消息状态为已读
+     * @param message
+     */
     @RequestMapping("/updateMessageStatus")
     @ResponseBody
-    public void updateMessageStatus(@RequestBody Map<String, Integer> requsest) {
-        logger.debug("updateMessageStatus run" + requsest);
-        int senderId = requsest.get("senderId");
-        int receiverId = requsest.get("receiverId");
-        messageService.updateMessageStatus(senderId, receiverId);
+    public void updateMessageStatus(@RequestBody Message message) {
+        
+        messageMapperService.updateMessageStatus(message);
     }
-
+    
+    /**
+     * 获取历史消息
+     * @param message
+     * @return
+     */
     @RequestMapping("/getHistoryMessage")
     @ResponseBody
-    public List<Message> getHistoryMessage(@RequestBody Map<String, Integer> requsest) {
-        logger.debug("updateMessageStatus run" + requsest);
-        int senderId = requsest.get("senderId");
-        int receiverId = requsest.get("receiverId");
-        List<Message> messageList = messageService.getHistoryMessage(senderId, receiverId);
+    public List<Message> getHistoryMessage(@RequestBody Message message) {
+        
+        List<Message> messageList = messageMapperService.getHistoryMessage(message);
         return messageList;
     }
-
+    
 }
