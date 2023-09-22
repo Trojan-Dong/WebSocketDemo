@@ -6,7 +6,7 @@ import java.util.Map;
 public class ContentType {
 	public static Map<String,String> contentType;
 	static {
-		contentType = new HashMap<String,String>();
+		contentType = new HashMap<>();
 		contentType.put(".*", "application/octet-stream");
 		contentType.put(".tif", "image/tiff");
 		contentType.put(".001", "application/x-001");
@@ -18,7 +18,6 @@ public class ContentType {
 		contentType.put(".acp", "audio/x-mei-aac");
 		contentType.put(".ai", "application/postscript");
 		contentType.put(".aif", "audio/aiff");
-		contentType.put(".aifc", "audio/aiff");
 		contentType.put(".aiff", "audio/aiff");
 		contentType.put(".anv", "application/x-anv");
 		contentType.put(".asa", "text/asa");
@@ -116,9 +115,8 @@ public class ContentType {
 		contentType.put(".java", "java/*");
 		contentType.put(".jfif", "image/jpeg");
 		contentType.put(".jpe", "image/jpeg");
-		contentType.put(".jpe", "application/x-jpe");
+		contentType.put(".x-jpe", "application/x-jpe");
 		contentType.put(".jpeg", "image/jpeg");
-		contentType.put(".jpg", "image/jpeg");
 		contentType.put(".jpg", "application/x-jpg");
 		contentType.put(".js", "application/x-javascript");
 		contentType.put(".jsp", "text/html");
@@ -137,7 +135,7 @@ public class ContentType {
 		contentType.put(".mac", "application/x-mac");
 		contentType.put(".man", "application/x-troff-man");
 		contentType.put(".math", "text/xml");
-		contentType.put(".mdb", "application/msaccess");
+		contentType.put(".access", "application/msaccess");
 		contentType.put(".mdb", "application/x-mdb");
 		contentType.put(".mfp", "application/x-shockwave-flash");
 		contentType.put(".mht", "message/rfc822");
@@ -188,7 +186,6 @@ public class ContentType {
 		contentType.put(".pcl", "application/x-pcl");
 		contentType.put(".pcx", "application/x-pcx");
 		contentType.put(".pdf", "application/pdf");
-		contentType.put(".pdf", "application/pdf");
 		contentType.put(".pdx", "application/vnd.adobe.pdx");
 		contentType.put(".pfx", "application/x-pkcs12");
 		contentType.put(".pgl", "application/x-pgl");
@@ -199,19 +196,19 @@ public class ContentType {
 		contentType.put(".pls", "audio/scpls");
 		contentType.put(".plt", "application/x-plt");
 		contentType.put(".png", "image/png");
-		contentType.put(".png", "application/x-png");
+		contentType.put(".xpng", "application/x-png");
 		contentType.put(".pot", "application/vnd.ms-powerpoint");
 		contentType.put(".ppa", "application/vnd.ms-powerpoint");
 		contentType.put(".ppm", "application/x-ppm");
 		contentType.put(".pps", "application/vnd.ms-powerpoint");
 		contentType.put(".ppt", "application/vnd.ms-powerpoint");
-		contentType.put(".ppt", "application/x-ppt");
+		contentType.put(".xppt", "application/x-ppt");
 		contentType.put(".pr", "application/x-pr");
 		contentType.put(".prf", "application/pics-rules");
 		contentType.put(".prn", "application/x-prn");
 		contentType.put(".prt", "application/x-prt");
-		contentType.put(".ps", "application/x-ps");
-		contentType.put(".ps", "application/postscript");
+		contentType.put(".xps", "application/x-ps");
+		contentType.put(".pos", "application/postscript");
 		contentType.put(".ptn", "application/x-ptn");
 		contentType.put(".pwz", "application/vnd.ms-powerpoint");
 		contentType.put(".r3t", "text/vnd.rn-realtext3d");
@@ -241,7 +238,7 @@ public class ContentType {
 		contentType.put(".rpm", "audio/x-pn-realaudio-plugin");
 		contentType.put(".rsml", "application/vnd.rn-rsml");
 		contentType.put(".rt", "text/vnd.rn-realtext");
-		contentType.put(".rtf", "application/msword");
+		contentType.put(".msword", "application/msword");
 		contentType.put(".rtf", "application/x-rtf");
 		contentType.put(".rv", "video/vnd.rn-realvideo");
 		contentType.put(".sam", "application/x-sam");
@@ -272,7 +269,7 @@ public class ContentType {
 		contentType.put(".tg4", "application/x-tg4");
 		contentType.put(".tga", "application/x-tga");
 		contentType.put(".tif", "image/tiff");
-		contentType.put(".tif", "application/x-tif");
+		contentType.put(".xtif", "application/x-tif");
 		contentType.put(".tiff", "image/tiff");
 		contentType.put(".tld", "text/xml");
 		contentType.put(".top", "drawing/x-top");
@@ -286,10 +283,9 @@ public class ContentType {
 		contentType.put(".vdx", "application/vnd.visio");
 		contentType.put(".vml", "text/xml");
 		contentType.put(".vpg", "application/x-vpeg005");
-		contentType.put(".vsd", "application/vnd.visio");
+		contentType.put(".vnd", "application/vnd.visio");
 		contentType.put(".vsd", "application/x-vsd");
 		contentType.put(".vss", "application/vnd.visio");
-		contentType.put(".vst", "application/vnd.visio");
 		contentType.put(".vst", "application/x-vst");
 		contentType.put(".vsw", "application/vnd.visio");
 		contentType.put(".vsx", "application/vnd.visio");
@@ -332,7 +328,6 @@ public class ContentType {
 		contentType.put(".xfd", "application/vnd.adobe.xfd");
 		contentType.put(".xfdf", "application/vnd.adobe.xfdf");
 		contentType.put(".xhtml", "text/html");
-		contentType.put(".xls", "application/vnd.ms-excel");
 		contentType.put(".xls", "application/x-xls");
 		contentType.put(".xlw", "application/x-xlw");
 		contentType.put(".xml", "text/xml");

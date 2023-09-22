@@ -43,7 +43,7 @@ public class Message extends Model<Message> {
     private Integer hasRead;
     
     //是否删除
-    private Integer delete;
+    private Integer hasDelete;
     
     //创建时间
     private LocalDateTime createTime;

@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.trojan.mapper")
+@MapperScan("com.trojan.repository.mapper")
 public class WebSocketDemoApp {
     
     public static void main(String[] args) {

@@ -33,14 +33,11 @@ public class User extends Model<User> {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     
-    @TableField("loginName")
     private String loginName;
     
-    @TableField("nickName")
     private String nickName;
     
     //真实名称
-    @TableField("realName")
     private String realName;
     
     //密码
@@ -60,15 +57,12 @@ public class User extends Model<User> {
     private String status;
     
     //注册ip
-    @TableField("regIp")
     private String regIp;
     
     //重试次数
-    @TableField("tryTimes")
     private Integer tryTimes;
     
     //身份证号
-    @TableField("idCardNo")
     private String idCardNo;
     
     //创建时间
